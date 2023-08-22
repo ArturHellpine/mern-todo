@@ -1,12 +1,14 @@
-import React, { useContext } from "react";
+import React, {useContext, useState} from "react";
 import "./Navbar.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import ModalComponent from "../modal/ModalComponent";
 
 
 const Navbar = () => {
     const { fullName, logout, isLogin } = useContext(AuthContext)
     const router = useNavigate()
+    const [modal, setModal] = useState(false)
 
     const logoutHandler = () => {
         logout()
@@ -29,6 +31,7 @@ const Navbar = () => {
 
                     :  <ul id="nav-mobile" className="right hide-on-med-and-down">
                         <li className='user__name'>
+                            <button onClick={() => setModal(true)} className='wawes-effect wawes-light btn red'>Видалити акаунт</button>
                             <img className='user__icon' src="user.png" alt=""/>
                             {fullName}
                         </li>
@@ -38,6 +41,7 @@ const Navbar = () => {
                     </ul>
                 }
             </div>
+            <ModalComponent setModal={setModal} modal={modal} />
         </nav>
     );
 };
